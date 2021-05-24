@@ -3,7 +3,7 @@ version: '3.8'
 services:
   web:
     build: .
-    command: gunicorn config.wsgi -b 0.0.0.0:8000
+    command: python /code/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
@@ -11,7 +11,6 @@ services:
     depends_on:
       - db
     environment:
-      - "DJANGO_SECRET_KEY=ljxd$$)b6i$$uu9i%rkw&xnopvsey)la#lckhw)ql63-m1rci@gp"
       - "DJANGO_DEBUG=True"
       - "DJANGO_SECURE_SSL_REDIRECT=False"
       - "DJANGO_SECURE_HSTS_SECONDS=0"
@@ -22,6 +21,7 @@ services:
       
   db:
     image: postgres:11
+    restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
